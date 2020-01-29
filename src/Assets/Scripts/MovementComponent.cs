@@ -9,13 +9,13 @@ public class MovementComponent : MonoBehaviour
     public float SprintMultiplier = 2f;
     public float JumpForce = 4.0f;
 
-    private Rigidbody _rb;
+    private CharacterController _controller;
     private Vector2 _moveVector;
 
     // Start is called before the first frame update
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        _controller = GetComponent<CharacterController>();
 
         _moveVector = new Vector2();
     }
@@ -28,18 +28,23 @@ public class MovementComponent : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 displacement = new Vector3(_moveVector.x, 0, _moveVector.y) * WalkSpeed * Time.fixedDeltaTime;
+        // Movements
+        Vector3 displacement = new Vector3(_moveVector.x, 0, _moveVector.y) * WalkSpeed;
 
         if (Sprinting)
             displacement *= SprintMultiplier;
 
-        _rb.MovePosition(transform.position + displacement);
+        // Gravity
+        displacement.y += Physics.gravity.y; // FIXME: Gravity is reset each frame (need to stack it until the player touch the ground).
 
-        // If the player is too slow or stopped, cancel the sprint (for toggle sprint type).
-        if (Sprinting && _rb.velocity.magnitude <= 0.1)
-            Sprinting = false;
+        // Apply movement to Character Controller
+        _controller.Move(displacement * Time.fixedDeltaTime);
     }
 
+    /// <summary>
+    /// Set the movement vector (usually the controller input).
+    /// </summary>
+    /// <param name="value">A normalized Vector2 representing the input vector.</param>
     public void Move(Vector2 value)
     {
         _moveVector = value;

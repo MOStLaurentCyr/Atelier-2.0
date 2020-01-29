@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+
+        // TODO: Maybe find something better than this
         UpdateComponents();
     }
 
