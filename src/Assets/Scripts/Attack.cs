@@ -6,13 +6,15 @@ public class Attack : MonoBehaviour
 {
     public Attack CreateAttack(int damage, int range, int cooldown, Effect effect, int level, int costToUpgrade)
     {
-        Attack attack = new Attack();
-        attack.Damage = damage;
-        attack.Range = range;
-        attack.Cooldown = cooldown;
-        attack._effect = effect;
-        attack.Level = level;
-        attack.CostToUpgrade = costToUpgrade;
+        var attack = new Attack
+        {
+            Damage = damage,
+            Range = range,
+            Cooldown = cooldown,
+            _effect = effect,
+            Level = level,
+            CostToUpgrade = costToUpgrade
+        };
         return attack;
     }
 

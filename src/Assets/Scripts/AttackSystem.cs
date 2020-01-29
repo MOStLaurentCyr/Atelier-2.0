@@ -23,12 +23,21 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            DoAttack(baseAttack);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UpgradeAttack(baseAttack);
+        }
     }
 
     public void DoAttack(Attack attackToDo)
     {
         Debug.Log("Bang!");
+        
     }
 
     public void UpgradeAttack(Attack attackToUpgrade)
