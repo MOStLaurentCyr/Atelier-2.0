@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 112176775153747634}
   - component: {fileID: 5812657967526733145}
   - component: {fileID: 633914625905661714}
+  - component: {fileID: 5433449857981286630}
+  - component: {fileID: 3524165678831449379}
   - component: {fileID: 434623140331286823}
   m_Layer: 0
   m_Name: Player
@@ -109,8 +111,36 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &5433449857981286630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887872260959616971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94948f05633355469702d5efc49e936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3524165678831449379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887872260959616971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385fffd4812a8064cab2eb2469c3f8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprinting: 0
+  WalkSpeed: 10
+  SprintMultiplier: 2
+  JumpForce: 4
 --- !u!114 &434623140331286823
 MonoBehaviour:
   m_ObjectHideFlags: 0

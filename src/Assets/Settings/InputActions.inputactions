@@ -38,15 +38,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Sprint Hold",
-                    "type": "Button",
-                    "id": "c2f66a81-1077-4850-996c-952904163106",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Sprint Toggle",
+                    "name": "Sprint",
                     "type": "Button",
                     "id": "e6bb8a68-6877-4512-9cb7-1ea7d1372e4a",
                     "expectedControlType": "",
@@ -56,7 +48,7 @@
                 {
                     "name": "Basic Attack",
                     "type": "Value",
-                    "id": "436aeb6f-9fb0-4ab9-8c9d-f00af9b59774",
+                    "id": "7eea2e9d-b9e8-4ac9-8847-b8400359ec3e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -64,7 +56,7 @@
                 {
                     "name": "Melee",
                     "type": "Button",
-                    "id": "7eea2e9d-b9e8-4ac9-8847-b8400359ec3e",
+                    "id": "acdd51d6-0f14-428f-b0f3-afcdb3322ed2",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -72,7 +64,7 @@
                 {
                     "name": "Range",
                     "type": "Button",
-                    "id": "acdd51d6-0f14-428f-b0f3-afcdb3322ed2",
+                    "id": "33708fee-df9f-4627-ad6d-0d3b9cd1ea2f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -80,7 +72,7 @@
                 {
                     "name": "Ability",
                     "type": "Button",
-                    "id": "33708fee-df9f-4627-ad6d-0d3b9cd1ea2f",
+                    "id": "677ca990-96c3-49e8-88dd-a1714d857a1c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -221,23 +213,12 @@
                 },
                 {
                     "name": "",
-                    "id": "17d6f4e6-6478-471e-a3fd-cc6fce2fe5d1",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Sprint Hold",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a6e3b035-3aaa-4c3d-9799-8804c8175b37",
                     "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Sprint Toggle",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -326,6 +307,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc8b2322-48c9-4ad8-ada2-56039d376c54",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
