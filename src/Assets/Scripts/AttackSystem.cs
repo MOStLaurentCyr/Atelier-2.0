@@ -11,13 +11,14 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
     private Attack rangeAttack;
 
     private Attack ability;
+
     // Start is called before the first frame update
     void Start()
     {
-        baseAttack.CreateAttack(1, 1, 1, Attack.Effect.None, 1, 1);
-        meleeAttack.CreateAttack(1, 1, 1, Attack.Effect.None, 1, 1);
-        rangeAttack.CreateAttack(1, 1, 1, Attack.Effect.None, 1, 1);
-        ability.CreateAttack(1, 1, 1, Attack.Effect.None, 1, 1);
+        baseAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        meleeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        rangeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        ability = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
     }
 
     // Update is called once per frame
@@ -37,11 +38,11 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
     public void DoAttack(Attack attackToDo)
     {
         Debug.Log("Bang!");
-        
     }
 
     public void UpgradeAttack(Attack attackToUpgrade)
     {
-        Debug.Log("Attack Upgraded!");
+        attackToUpgrade.Level++;
+        Debug.Log("Attack been upgrade to level : " + attackToUpgrade.Level.ToString());
     }
 }
