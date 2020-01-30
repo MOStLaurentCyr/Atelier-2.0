@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AttackSystem : MonoBehaviour,IAttackSystem
 {
-    public static Attack BaseAttack { get; private set; }
+    public static Attack BaseAttack;
 
-    public Attack MeleeAttack { get; private set; }
+    public static Attack MeleeAttack;
 
-    public Attack RangeAttack { get; private set; }
+    public static Attack RangeAttack;
 
-    public Attack Ability { get; private set; }
+    public static Attack Ability;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,7 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
     public static void ChangeAttack(Attack attackToChange, Attack newAttack)
     {
         attackToChange = newAttack;
+        Debug.Log(attackToChange.Damage.ToString());
     }
 
     public void UpgradeAttack(Attack attackToUpgrade)

@@ -3,24 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Job : MonoBehaviour
+public abstract class Job : ScriptableObject
 {
-    protected Attack AbilityToGive;
+    public Attack JobAbility { get; set; }
     public Attack JobBaseAttack { get; set; }
-    protected Attack JobMeleeAttack;
-    protected Attack JobRangeAttack;
+    public Attack JobMeleeAttack { get; set; }
+    public Attack JobRangeAttack { get; set; }
 }
 
 class Hunter : Job
 {
     public static Hunter CreateInstance()
     {
-        Hunter hunterJob = new Hunter
+        Hunter hunterJob = ScriptableObject.CreateInstance<Hunter>();
         {
-            AbilityToGive = Attack.CreateInstance(2,2,2,Attack.Effect.Slow,1,1),
-            JobBaseAttack = Attack.CreateInstance(2,3,1,Attack.Effect.Slow,1,2),
-            JobMeleeAttack = Attack.CreateInstance(1,1,2,Attack.Effect.None,1,2),
-            JobRangeAttack = Attack.CreateInstance(3,4,8,Attack.Effect.Stun,1,1)
+            hunterJob.JobBaseAttack = Attack.CreateInstance(2, 3, 1, Attack.Effect.Slow, 1, 2);
+            hunterJob.JobMeleeAttack = Attack.CreateInstance(1, 1, 2, Attack.Effect.None, 1, 2);
+            hunterJob.JobRangeAttack = Attack.CreateInstance(3, 4, 8, Attack.Effect.Stun, 1, 1);
+            hunterJob.JobAbility = Attack.CreateInstance(2, 2, 2, Attack.Effect.Slow, 1, 1);
         };
         return hunterJob;
     }

@@ -600,10 +600,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea55080dfc5c244e8359883d1db3c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAttack: {fileID: 0}
-  meleeAttack: {fileID: 0}
-  rangeAttack: {fileID: 0}
-  ability: {fileID: 0}
+--- !u!114 &1307260677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307260673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41fd2d6da39aea4eab2f26f9975e80d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1373507801
 GameObject:
   m_ObjectHideFlags: 0

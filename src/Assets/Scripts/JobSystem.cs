@@ -14,6 +14,9 @@ public class JobSystem : MonoBehaviour, IJobSystem
     public void SetJob(Job jobToGive)
     {
         AttackSystem.ChangeAttack(AttackSystem.BaseAttack, jobToGive.JobBaseAttack);
+        AttackSystem.ChangeAttack(AttackSystem.MeleeAttack, jobToGive.JobMeleeAttack);
+        AttackSystem.ChangeAttack(AttackSystem.RangeAttack, jobToGive.JobRangeAttack);
+        AttackSystem.ChangeAttack(AttackSystem.Ability, jobToGive.JobAbility);
     }
 
     public void ChangeJob()
