@@ -5,19 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private MovementComponent _movementComponent;
-
     // Start is called before the first frame update
     private void Start()
     {
 
-        // TODO: Maybe find something better than this
-        UpdateComponents();
-    }
-
-    public void UpdateComponents()
-    {
-        _movementComponent = GetComponent<MovementComponent>();
     }
 
     private void OnLook(InputValue value)
@@ -27,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract()
     {
-
+        
     }
 
     private void OnBasicAttack()

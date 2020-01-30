@@ -5,70 +5,73 @@ using UnityEngine.InputSystem;
 
 public class MovementComponent : MonoBehaviour
 {
-    public bool IsInAir { get; private set; }
+    public bool IsInAir => !_controller.isGrounded;
     public bool IsSprinting { get; private set; }
-
 
     public float WalkSpeed = 150.0f;
     public float SprintMultiplier = 2f;
     public float JumpHeight = 1.0f;
+    public Vector3 GroundDrag = new Vector3(50f, 0, 50f);
 
     [Tooltip("The camera is use to know the direction the player is looking at and to apply movement relative to that direction.")]
     public Camera PlayerCamera;
 
-    private Rigidbody _rigidbody;
-    private CapsuleCollider _collider;
-    private Vector2 _moveVector;
+    private CharacterController _controller;
 
-    // Start is called before the first frame update
+    private bool _isJumping;
+    private Vector2 _moveVector;
+    private Vector3 _velocity;
+
     private void Start()
     {
-        IsInAir = false;
-        IsSprinting = false;
+        // If the camera wasn't provided, find one in the scene.
+        if (!PlayerCamera)
+            PlayerCamera = FindObjectOfType<Camera>();
 
-        _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<CapsuleCollider>();
+        _controller = GetComponent<CharacterController>();
 
+        _isJumping = false;
         _moveVector = new Vector2();
+        _velocity = new Vector3();
     }
 
+    // Compute movement inputs
     private void Update()
     {
-        Debug.Log(_rigidbody.velocity.magnitude);
-    }
-    
-    private void FixedUpdate()
-    {
-        #region Air Detection
-
-        // We need to check against all layer except the 8th (the Player layer).
-        var layerMask = 1 << 8;
-        layerMask = ~layerMask;
-        var radius = _collider.radius * 0.75f;
-
-        IsInAir = !Physics.CheckCapsule(_collider.bounds.center,
-            new Vector3(_collider.bounds.center.x, _collider.bounds.min.y + radius - 0.1f, _collider.bounds.center.z),
-            radius, layerMask);
-
-        #endregion
-
-        #region Movement
-
-        if (IsInAir) return;
-
-        var movement = new Vector3(_moveVector.x, 0, _moveVector.y) * WalkSpeed * Time.fixedDeltaTime;
-        movement = Quaternion.AngleAxis(PlayerCamera.transform.rotation.eulerAngles.y, Vector3.up) * movement;
+        var move = new Vector3(_moveVector.x, 0, _moveVector.y) * WalkSpeed * Time.deltaTime;
+        move = Quaternion.AngleAxis(PlayerCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
 
         if (IsSprinting)
-            movement *= SprintMultiplier;
+            move *= SprintMultiplier;
 
-        // Do not override the gravity force
-        var yV = _rigidbody.velocity.y;
-        movement.y = yV;
+        if (_controller.isGrounded)
+            _velocity += move;
 
-        _rigidbody.velocity = movement;
+        if (move != Vector3.zero)
+            transform.forward = move;
+    }
 
-        #endregion
+    // Compute physics
+    private void FixedUpdate()
+    {
+        if (_controller.isGrounded)
+            _velocity.y = 0;
+
+        if (_isJumping)
+        {
+            _isJumping = false;
+            _velocity.y += Mathf.Sqrt(JumpHeight * -2.0f * Physics.gravity.y);
+        }
+
+        _velocity.y += Physics.gravity.y * Time.deltaTime;
+
+        if (_controller.isGrounded)
+        {
+            _velocity.x /= 1 + GroundDrag.x * Time.deltaTime;
+            _velocity.z /= 1 + GroundDrag.z * Time.deltaTime;
+        }
+
+        _controller.Move(_velocity * Time.deltaTime);
     }
 
     /// <summary>
@@ -77,44 +80,58 @@ public class MovementComponent : MonoBehaviour
     /// <param name="value">A Vector2 representing the input vector. Will be normalized.</param>
     public void Move(Vector2 value)
     {
-        Internal_Move(value.normalized);
+        Move_Internal(value.normalized);
     }
 
     /// <summary>
     /// Internal method that doesn't normalize the input vector (it should already be normalized).
     /// </summary>
     /// <param name="value">A normalized vector.</param>
-    private void Internal_Move(Vector2 value)
+    private void Move_Internal(Vector2 value)
     {
         _moveVector = value;
     }
 
-    #region Input Events
-
-    private void OnMove(InputValue value)
+    /// <summary>
+    /// Make the character jump.
+    /// </summary>
+    public void Jump()
     {
-        var v = value.Get<Vector2>();
-
-        // Since the input is already normalized, we can directly call the internal move method.
-        Internal_Move(v);
+        if (_controller.isGrounded)
+            _isJumping = true;
     }
 
-    private void OnJump()
-    {
-        if (IsInAir) return;
-
-        _rigidbody.AddForce(Vector3.up * Mathf.Sqrt(JumpHeight * -2.0f * Physics.gravity.y), ForceMode.VelocityChange);
-    }
-
-    private void OnSprint(InputValue value)
+    /// <summary>
+    /// Make the character run. This is a toggle but can also be use by holding an input (the value should be if the input is pressed or releases).
+    /// </summary>
+    /// <param name="value">The input state (<c>true</c> for pressed, <c>false</c> for released). Default to <c>true</c>.</param>
+    public void Sprint(bool value = true)
     {
         // Check the state of the button when this event was called.
-        if (!value.isPressed)
+        if (!value)
             // The button was release, so we assume it was a "hold" type (ex: hold Left Shift to sprint).
             IsSprinting = false;
         else
             // We just toggle the value.
             IsSprinting = !IsSprinting;
+    }
+
+    #region Player Input Events
+
+    private void OnMove(InputValue value)
+    {
+        var v = value.Get<Vector2>();
+        Move_Internal(v);
+    }
+
+    private void OnJump()
+    {
+        Jump();
+    }
+
+    private void OnSprint(InputValue value)
+    {
+        Sprint(value.isPressed);
     }
 
     #endregion
