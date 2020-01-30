@@ -20,36 +20,6 @@ public class PlayerController : MonoBehaviour
         _movementComponent = GetComponent<MovementComponent>();
     }
 
-    #region Movement Component Actions
-
-    private void OnMove(InputValue value)
-    {
-        if (!_movementComponent) return;
-
-        var v = value.Get<Vector2>();
-        _movementComponent.Move(v);
-    }
-
-    private void OnJump()
-    {
-        Debug.Log("Jumping");
-    }
-
-    private void OnSprint(InputValue value)
-    {
-        if (!_movementComponent) return;
-
-        // Check the state of the button when this event was called.
-        if (!value.isPressed)
-            // The button was release, so we assume it was a "hold" type (ex: hold Left Shift to sprint).
-            _movementComponent.Sprinting = false;
-        else
-            // We just toggle the value.
-            _movementComponent.Sprinting = !_movementComponent.Sprinting;
-    }
-
-    #endregion
-
     private void OnLook(InputValue value)
     {
         var v = value.Get<Vector2>();
