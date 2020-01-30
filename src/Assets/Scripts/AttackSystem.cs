@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class AttackSystem : MonoBehaviour,IAttackSystem
 {
-    public Attack baseAttack;
+    public static Attack BaseAttack { get; private set; }
 
-    public Attack meleeAttack;
+    public Attack MeleeAttack { get; private set; }
 
-    public Attack rangeAttack;
+    public Attack RangeAttack { get; private set; }
 
-    public Attack ability;
+    public Attack Ability { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        baseAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
-        meleeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
-        rangeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
-        ability = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        BaseAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        MeleeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        RangeAttack = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
+        Ability = Attack.CreateInstance(1, 1, 1, Attack.Effect.None, 1, 1);
     }
 
     // Update is called once per frame
@@ -26,12 +26,12 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            DoAttack(baseAttack);
+            DoAttack(BaseAttack);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            UpgradeAttack(baseAttack);
+            UpgradeAttack(BaseAttack);
         }
     }
 
@@ -40,9 +40,19 @@ public class AttackSystem : MonoBehaviour,IAttackSystem
         Debug.Log("Bang!");
     }
 
+    public static void ChangeAttack(Attack attackToChange, Attack newAttack)
+    {
+        attackToChange = newAttack;
+    }
+
     public void UpgradeAttack(Attack attackToUpgrade)
     {
         attackToUpgrade.Level++;
         Debug.Log("Attack been upgrade to level : " + attackToUpgrade.Level.ToString());
+    }
+
+    void IAttackSystem.ChangeAttack(Attack attackToChange, Attack newAttack)
+    {
+        ChangeAttack(attackToChange, newAttack);
     }
 }

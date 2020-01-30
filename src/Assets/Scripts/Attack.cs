@@ -24,7 +24,7 @@ public class Attack : ScriptableObject
     public int Cooldown;
     public int Level;
     public int CostToUpgrade;
-    private Effect _effect;
+    public Effect _effect;
 
     public enum Effect
     {

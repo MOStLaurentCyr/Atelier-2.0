@@ -6,4 +6,6 @@ public interface IAttackSystem
 {
     void DoAttack(Attack attackToDo);
     void UpgradeAttack(Attack attackToUpgrade);
+    void ChangeAttack(Attack attackToChange, Attack newAttack);
 }
+    
