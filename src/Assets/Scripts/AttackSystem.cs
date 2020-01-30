@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AttackSystem : MonoBehaviour,IAttackSystem
 {
-    private Attack baseAttack;
+    public Attack baseAttack;
 
-    private Attack meleeAttack;
+    public Attack meleeAttack;
 
-    private Attack rangeAttack;
+    public Attack rangeAttack;
 
-    private Attack ability;
+    public Attack ability;
 
     // Start is called before the first frame update
     void Start()
