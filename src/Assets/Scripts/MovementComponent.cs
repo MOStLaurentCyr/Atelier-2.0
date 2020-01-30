@@ -19,6 +19,7 @@ public class MovementComponent : MonoBehaviour
     private CharacterController _controller;
 
     private bool _isJumping;
+    private bool _wantToSprint;
     private Vector2 _moveVector;
     private Vector3 _velocity;
 
@@ -28,9 +29,12 @@ public class MovementComponent : MonoBehaviour
         if (!PlayerCamera)
             PlayerCamera = FindObjectOfType<Camera>();
 
+        IsSprinting = false;
+
         _controller = GetComponent<CharacterController>();
 
         _isJumping = false;
+        _wantToSprint = false;
         _moveVector = new Vector2();
         _velocity = new Vector3();
     }
@@ -40,6 +44,12 @@ public class MovementComponent : MonoBehaviour
     {
         var move = new Vector3(_moveVector.x, 0, _moveVector.y) * WalkSpeed * Time.deltaTime;
         move = Quaternion.AngleAxis(PlayerCamera.transform.rotation.eulerAngles.y, Vector3.up) * move;
+
+        IsSprinting = _wantToSprint;
+
+        if (IsSprinting && _velocity.x < _controller.minMoveDistance && _velocity.x > -_controller.minMoveDistance &&
+            _velocity.z < _controller.minMoveDistance && _velocity.z > -_controller.minMoveDistance)
+            IsSprinting = false;
 
         if (IsSprinting)
             move *= SprintMultiplier;
@@ -110,10 +120,10 @@ public class MovementComponent : MonoBehaviour
         // Check the state of the button when this event was called.
         if (!value)
             // The button was release, so we assume it was a "hold" type (ex: hold Left Shift to sprint).
-            IsSprinting = false;
+            _wantToSprint = false;
         else
             // We just toggle the value.
-            IsSprinting = !IsSprinting;
+            _wantToSprint = !_wantToSprint;
     }
 
     #region Player Input Events
