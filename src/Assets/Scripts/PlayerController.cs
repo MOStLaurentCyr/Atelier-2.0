@@ -18,26 +18,30 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract()
     {
-        
+        Debug.Log("Interact button pressed");
     }
 
     private void OnBasicAttack()
     {
+        Debug.Log("Basic attack button pressed");
 
     }
 
     private void OnMelee()
     {
+        Debug.Log("Melee button pressed");
 
     }
 
     private void OnRange()
     {
+        Debug.Log("Range button pressed");
 
     }
 
     private void OnAbility()
     {
+        Debug.Log("Ability button pressed");
 
     }
 }
